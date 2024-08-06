@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 ImageSlider.propTypes = {
     slides: PropTypes.object,
 }
 
 function ImageSlider({ slides }) {
+    const timerRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const sliderStyles = {
@@ -62,14 +63,25 @@ function ImageSlider({ slides }) {
         setCurrentIndex(newIndex);
     }
 
-    const goToNext = () => {
+    const goToNext = useCallback(() => {
         const newIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
         setCurrentIndex(newIndex);
-    }
+    }, [currentIndex, slides]);
 
     const goToSlide = (index) => {
         setCurrentIndex(index);
     }
+
+    useEffect(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+        timerRef.current = setTimeout(() => {
+            goToNext();
+        }, 2000);
+
+        return () => clearTimeout(timerRef.current);
+    }, [goToNext]);
 
     return (
         <div style={sliderStyles}>
