@@ -32,7 +32,7 @@ function App() {
     <div style={appStyles}>
       <h1>Kurumi Image Slider</h1>
       <div style={containerStyles}>
-        <ImageSlider slides={slides}/>
+        <ImageSlider slides={slides} parentWidth={500}/>
       </div>
     </div>
   );

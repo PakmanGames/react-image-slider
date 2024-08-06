@@ -3,9 +3,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 
 ImageSlider.propTypes = {
     slides: PropTypes.object,
+    parentWidth: PropTypes.number,
 }
 
-function ImageSlider({ slides }) {
+function ImageSlider({ slides, parentWidth }) {
     const timerRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -50,12 +51,24 @@ function ImageSlider({ slides }) {
         display: "flex",
         justifyContent: "center",
         gap: "10px",
+        marginTop: "20px",
     }
 
     const dotStyles = {
         margin: "0px 3px",
         cursor: "pointer",
         fontSize: "10px",
+    }
+
+    const slidesContainerStyles = {
+        display: "flex",
+        height: "100%",
+        transition: "transform ease-out 0.3s",
+    }
+
+    const slidesContainerOverflowStyles = {
+        overflow: "hidden",
+        height: "100%",
     }
 
     const goToPrev = () => {
@@ -72,6 +85,18 @@ function ImageSlider({ slides }) {
         setCurrentIndex(index);
     }
 
+    const getSlideStylesWithBackground = (slideIndex) => ({
+        ...slideStyles,
+        backgroundImage: `url(${slides[slideIndex].url})`,
+        width: `${parentWidth}px`,
+    })
+
+    const getSlidesContainerStylesWithWidth = () => ({
+        ...slidesContainerStyles,
+        width: parentWidth * slides.length,
+        transform: `translateX(${-(currentIndex * parentWidth)}px)`
+    })
+
     useEffect(() => {
         if (timerRef.current) {
             clearTimeout(timerRef.current);
@@ -87,7 +112,13 @@ function ImageSlider({ slides }) {
         <div style={sliderStyles}>
             <div style={leftArrowStyles} onClick={goToPrev}><i className="fa-solid fa-chevron-left"></i></div>
             <div style={rightArrowStyles} onClick={goToNext}><i className="fa-solid fa-chevron-right"></i></div>
-            <div style={slideStyles}></div>
+            <div style={slidesContainerOverflowStyles}>
+                <div style={getSlidesContainerStylesWithWidth()}>
+                    {slides.map((_, slideIndex) => (
+                        <div key={slideIndex} style={getSlideStylesWithBackground(slideIndex)}></div>
+                    ))}
+                </div>
+            </div>
             <div style={dotsContainerStyles}>
                 {slides.map((slide, slideIndex) => (
                     <div key={slideIndex} style={dotStyles} onClick={() => goToSlide(slideIndex)}><i className="fa-solid fa-circle"></i></div>
