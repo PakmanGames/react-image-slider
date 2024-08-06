@@ -21,7 +21,7 @@ function App() {
 
   const containerStyles = {
     width: "500px",
-    height: "280px",
+    height: "350px",
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
