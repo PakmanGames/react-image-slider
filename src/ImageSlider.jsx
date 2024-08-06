@@ -20,6 +20,7 @@ function ImageSlider({ slides }) {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundImage: `url(${slides[currentIndex].url})`,
+        marginBottom: "20px",
     }
 
     const leftArrowStyles = {
@@ -44,6 +45,18 @@ function ImageSlider({ slides }) {
         cursor: "pointer",
     }
 
+    const dotsContainerStyles = {
+        display: "flex",
+        justifyContent: "center",
+        gap: "10px",
+    }
+
+    const dotStyles = {
+        margin: "0px 3px",
+        cursor: "pointer",
+        fontSize: "10px",
+    }
+
     const goToPrev = () => {
         const newIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
         setCurrentIndex(newIndex);
@@ -54,11 +67,20 @@ function ImageSlider({ slides }) {
         setCurrentIndex(newIndex);
     }
 
+    const goToSlide = (index) => {
+        setCurrentIndex(index);
+    }
+
     return (
         <div style={sliderStyles}>
             <div style={leftArrowStyles} onClick={goToPrev}><i className="fa-solid fa-chevron-left"></i></div>
             <div style={rightArrowStyles} onClick={goToNext}><i className="fa-solid fa-chevron-right"></i></div>
             <div style={slideStyles}></div>
+            <div style={dotsContainerStyles}>
+                {slides.map((slide, slideIndex) => (
+                    <div key={slideIndex} style={dotStyles} onClick={() => goToSlide(slideIndex)}><i className="fa-solid fa-circle"></i></div>
+                ))}
+            </div>
         </div>
     );
 }
