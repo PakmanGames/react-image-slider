@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { useState, useRef, useEffect, useCallback } from 'react';
+import './ImageSlider.css'
 
 // Prop type validation
 ImageSlider.propTypes = {
@@ -12,11 +13,6 @@ function ImageSlider({ slides, parentWidth }) {
     const timerRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const sliderStyles = {
-        height: "100%",
-        position: "relative",
-    };
-
     const slideStyles = {
         width: "100%",
         height: "100%",
@@ -27,50 +23,10 @@ function ImageSlider({ slides, parentWidth }) {
         marginBottom: "20px",
     };
 
-    const leftArrowStyles = {
-        position: "absolute",
-        top: "50%",
-        transform: "translate(0, -50%)",
-        left: "32px",
-        fontSize: "45px",
-        color: "#fff",
-        zIndex: 1,
-        cursor: "pointer",
-    };
-
-    const rightArrowStyles = {
-        position: "absolute",
-        top: "50%",
-        transform: "translate(0, -50%)",
-        right: "32px",
-        fontSize: "45px",
-        color: "#fff",
-        zIndex: 1,
-        cursor: "pointer",
-    };
-
-    const dotsContainerStyles = {
-        display: "flex",
-        justifyContent: "center",
-        gap: "10px",
-        marginTop: "20px",
-    };
-
-    const dotStyles = {
-        margin: "0px 3px",
-        cursor: "pointer",
-        fontSize: "10px",
-    };
-
     const slidesContainerStyles = {
         display: "flex",
         height: "100%",
         transition: "transform ease-out 0.3s",
-    };
-
-    const slidesContainerOverflowStyles = {
-        overflow: "hidden",
-        height: "100%",
     };
 
     // Return to the previous image
@@ -115,19 +71,19 @@ function ImageSlider({ slides, parentWidth }) {
     }, [goToNext]);
 
     return (
-        <div style={sliderStyles}>
-            <div style={leftArrowStyles} onClick={goToPrev}><i className="fa-solid fa-chevron-left"></i></div>
-            <div style={rightArrowStyles} onClick={goToNext}><i className="fa-solid fa-chevron-right"></i></div>
-            <div style={slidesContainerOverflowStyles}>
+        <div className='slider'>
+            <div className='arrow left-arrow' onClick={goToPrev}><i className="fa-solid fa-chevron-left"></i></div>
+            <div className='arrow right-arrow' onClick={goToNext}><i className="fa-solid fa-chevron-right"></i></div>
+            <div className='slides-container-overflow'>
                 <div style={getSlidesContainerStylesWithWidth()}>
                     {slides.map((_, slideIndex) => (
                         <div key={slideIndex} style={getSlideStylesWithBackground(slideIndex)}></div>
                     ))}
                 </div>
             </div>
-            <div style={dotsContainerStyles}>
+            <div className='dot-container'>
                 {slides.map((slide, slideIndex) => (
-                    <div key={slideIndex} style={dotStyles} onClick={() => goToSlide(slideIndex)}><i className="fa-solid fa-circle"></i></div>
+                    <div key={slideIndex} className='dot' onClick={() => goToSlide(slideIndex)}><i className="fa-solid fa-circle"></i></div>
                 ))}
             </div>
         </div>

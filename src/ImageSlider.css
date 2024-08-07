@@ -1,0 +1,50 @@
+.slider {
+    height: 100%;
+    position: relative;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 45px;
+    color: black;
+    z-index: 1;
+    cursor: pointer;
+    transition: text-shadow 0.2s ease-in-out;
+}
+
+.arrow:hover {
+    text-shadow: 2px 2px 5px black;
+}
+
+.left-arrow {
+    left: 32px;
+}
+
+.right-arrow {
+    right: 32px;
+}
+
+.dot-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dot {
+    margin: 0px 3px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dot:hover {
+    transform: scale(1.2);
+}
+
+.slides-container-overflow {
+    overflow: hidden;
+    height: 100%;
+}

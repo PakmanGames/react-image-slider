@@ -15,23 +15,10 @@ function App() {
     {url: image5, tile: 'Kurumi Cat'},
   ]
 
-  const appStyles = {
-    textAlign: "center",
-  }
-
-  const containerStyles = {
-    width: "500px",
-    height: "350px",
-    margin: "0 auto",
-    display: "flex",
-    flexDirection: "column",
-    marginTop: "40px",
-  }
-
   return (
-    <div style={appStyles}>
+    <div className='app-styles'>
       <h1>Kurumi Image Slider</h1>
-      <div style={containerStyles}>
+      <div className='slider-container'>
         <ImageSlider slides={slides} parentWidth={500}/>
       </div>
     </div>
